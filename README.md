@@ -144,7 +144,7 @@ Movie vs. TV Show distribution per country (percentage comparison):
 
 ## Repository Structure
 
-images/ → Graph model & visualizations
-queries/ → Cypher import, cleaning & analytical logic
-full-documentation/ → Complete project documentation
-README.md → Project overview
+- images/ → Graph model & visualizations
+- queries/ → Cypher import, cleaning & analytical logic
+- full-documentation/ → Complete project documentation
+- README.md → Project overview
