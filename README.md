@@ -1,115 +1,119 @@
 # Netflix Graph Analytics – Neo4j
 
-## Project Overview
+## Overview
 
-This project models and analyzes Netflix movies and TV shows using a graph database approach (Neo4j).  
-The objective was to transform raw CSV data into a structured graph model and perform hypothesis-driven analytics using Cypher queries.
+This project implements a graph-based analytical model for Netflix content using Neo4j.  
+Raw CSV data was transformed into a structured knowledge graph to enable multidimensional, hypothesis-driven analysis using Cypher.
 
-The project combines data engineering, graph modeling and analytical reasoning.
-
----
-
-## Objectives
-
-- Import and structure Netflix CSV dataset using Neo4j
-- Implement dynamic node labeling (Movie / TVShow)
-- Clean and validate inconsistent data
-- Model entities and relationships in a graph structure
-- Enrich data through additional relationships
-- Test analytical hypotheses using Cypher queries
+The project demonstrates applied data engineering, graph modeling and analytical query design.
 
 ---
 
-## Data Engineering Workflow
+## Core Objectives
+
+- Transform raw CSV data into a structured graph schema
+- Implement dynamic node classification (:Movie / :TVShow)
+- Clean and normalize inconsistent source data
+- Design relationship-driven graph architecture
+- Enrich and restructure the schema iteratively
+- Validate analytical hypotheses using aggregation logic
+
+---
+
+## Data Engineering Pipeline
 
 ### 1. Data Import
 
-- CSV-based import using `LOAD CSV`
-- Creation of `Title` nodes
-- Dynamic labeling (`:Movie`, `:TVShow`)
-- Attribute normalization and type conversion
+- CSV ingestion via `LOAD CSV`
+- Creation of `Title` base nodes
+- Conditional labeling (`:Movie`, `:TVShow`)
+- Type casting and normalization of attributes
 
-### 2. Data Cleaning
+### 2. Data Cleaning & Refactoring
 
-- Removal of invalid or empty country nodes
-- Trimming and validation of text fields
-- Relationship cleanup
+- Removal of empty or invalid `Country` nodes
+- Relationship pruning and restructuring
+- Deduplication logic
+- Schema simplification
 
 ### 3. Data Enrichment
 
 - Creation of `AgeRating` nodes
-- Relationship modeling using `MERGE`
-- Schema refactoring and restructuring
+- Controlled relationship modeling via `MERGE`
+- Refactoring of duration and release year modeling
+- Graph consistency validation
 
-Relevant implementation:
+Implementation reference:  
 `queries/data-import-and-cleaning.cql`
 
 ---
 
-## Graph Data Model
+## Graph Schema Design
 
-The dataset was transformed into a graph structure with the following core entities:
+### Core Node Types
 
-- Title
-- Movie
-- TVShow
-- Genre
-- Country
-- Person
-- Continent
-- AgeRating
+- `Title`
+- `Movie`
+- `TVShow`
+- `Genre`
+- `Country`
+- `Continent`
+- `Person`
+- `AgeRating`
 
-Relationships include:
+### Key Relationships
 
+- `PRODUCED_IN`
 - `DIRECTED_BY`
 - `ACTED_IN`
-- `PRODUCED_IN`
 - `BELONGS_TO`
 - `HAS_AGERATING`
-- Hierarchical continent-country relationships
+- Hierarchical `Country → Continent`
 
 ### Conceptual Model
 
 ![Graph Model](images/graph-data-model.png)
 
+The schema enables relationship-centric exploration and aggregation beyond relational constraints.
+
 ---
 
-## Analytical Hypothesis Example
+## Hypothesis-Driven Analysis
 
 ### Hypothesis
 
-The proportion of movies vs. TV shows differs significantly across countries, indicating distinct national production focuses.
+Content production focus (Movie vs. TV Show ratio) differs significantly across countries.
 
-### Query Implementation
+### Analytical Logic
 
-The hypothesis was tested using aggregation, grouping logic and percentage calculations in Cypher.
+The Cypher query implements:
 
-See:
+- Dual aggregation (Movie / TVShow)
+- Dynamic grouping of low-volume countries into "Others"
+- Global benchmark calculation ("Worldwide")
+- Percentage normalization
+- Ordered comparative ranking
+
+Query reference:  
 `queries/cypher-analysis-country-continent-distribution.cql`
 
-The query performs:
-
-- Aggregation of movies and TV shows per country
-- Grouping of smaller countries into "Others"
-- Global benchmark calculation ("Worldwide")
-- Percentage distribution calculation
-- Ordered comparative output
+This demonstrates advanced aggregation, conditional grouping and percentage transformation in Cypher.
 
 ---
 
-## Continent–Country Hierarchical Modeling
+## Geographic Hierarchical Modeling
 
-To enable structured geographic analysis, countries were modeled as belonging to continents.
-
-This allows hierarchical aggregation and regional pattern analysis.
+Countries were linked to continents to enable regional roll-up analysis and hierarchical pattern detection.
 
 ![Continent Country Graph](images/continent-country-graph.png)
 
+This structure allows continent-level aggregation and geographic production analysis.
+
 ---
 
-## Example Visualization
+## Example Analytical Output
 
-Distribution of movies vs. TV shows per country (percentage-based comparison):
+Movie vs. TV Show distribution per country (percentage comparison):
 
 ![Country Content Distribution](images/country-content-distribution.png)
 
@@ -117,28 +121,30 @@ Distribution of movies vs. TV shows per country (percentage-based comparison):
 
 ## Technical Stack
 
-- Neo4j Graph Database
+- Neo4j
 - Cypher Query Language
-- CSV Import (`LOAD CSV`)
-- Data Cleaning & Validation
-- Schema Refactoring
-- Aggregation & Analytical Query Design
-- Graph Visualization
+- Graph Schema Modeling
+- CSV Ingestion & Transformation
+- Data Cleaning & Refactoring
+- Aggregation & Percentage Logic
+- Knowledge Graph Visualization
 
 ---
 
-## Key Learnings
+## What This Project Demonstrates
 
-- Graph databases enable multidimensional analysis beyond relational models
-- Hierarchical modeling improves geographic and categorical analysis
-- Cypher allows expressive aggregation and transformation logic
-- Data cleaning is critical for consistent graph relationships
-- Hypothesis-driven analysis improves analytical clarity
-
----
-
-## Full Documentation
-
-The complete project documentation and analytical background are available in the repository.
+- Applied graph data engineering
+- Relationship-centric modeling
+- Schema refactoring and normalization
+- Hypothesis-driven analytical design
+- Advanced Cypher aggregation patterns
+- Hierarchical geographic modeling
 
 ---
+
+## Repository Structure
+
+images/ → Graph model & visualizations
+queries/ → Cypher import, cleaning & analytical logic
+full-documentation/ → Complete project documentation
+README.md → Project overview
